@@ -60,10 +60,10 @@
 			children = (
 				D78C0B6A2AA8767500493550 /* AlertMessagesApp.swift */,
 				D78C0B6C2AA8767500493550 /* ContentView.swift */,
+				D78C0B7D2AA8775F00493550 /* AppErrors.swift */,
 				D78C0B6E2AA8767600493550 /* Assets.xcassets */,
 				D78C0B702AA8767600493550 /* AlertMessages.entitlements */,
 				D78C0B712AA8767600493550 /* Preview Content */,
-				D78C0B7D2AA8775F00493550 /* AppErrors.swift */,
 			);
 			path = AlertMessages;
 			sourceTree = "<group>";

@@ -55,11 +55,12 @@ enum AppError: LocalizedError {
             "Sorry..."
         }
     }
-
+    
+    /// This will be the label of the button
     var helpAnchor: String? {
         switch self {
         case .fileExtists:
-            "I don't care"
+            "I might do that"
         case .overwriteFile:
             "Overwrite"
         case .unsavedData:

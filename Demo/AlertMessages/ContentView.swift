@@ -9,17 +9,15 @@ import SwiftUI
 import SwiftlyAlertMessage
 
 struct ContentView: View {
-
+    /// The error alert
     @State private var error: AlertMessage?
-
+    /// The confirmation dialog
     @State private var confirm: AlertMessage?
-
+    /// The response from the buttons
     @State private var response: String?
-
+    /// The text in the form
     @State private var text: String = "Current text"
-
-
-
+    /// The body of the `View`
     var body: some View {
         VStack {
             Text("Alerts and Confirmation Dialogs")
@@ -37,7 +35,7 @@ struct ContentView: View {
                 }
                 Button("File Exist Error with action") {
                     error = AppError.fileExtists.alert {
-                        response = "The user did not care"
+                        response = "The user is thinking about it"
                     }
                 }
                 Text("Error that was just thrown at us from the system")
