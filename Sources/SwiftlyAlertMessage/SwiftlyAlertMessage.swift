@@ -1,24 +1,32 @@
 //
-//  AlertMessage.swift
-//  Make Books
+//  SwiftlyAlertMessage.swift
+//  SwiftlyAlertMessage
 //
 //  Created by Nick Berendsen on 06/09/2023.
 //
 
 import SwiftUI
 
+/// The structure for an Alert Message
 public struct AlertMessage {
+
+    /// Init the alert message
+    /// - Parameters:
+    ///   - error: The `Error`
+    ///   - role: The optional role of the *confirm* `Button`
+    ///   - action: The optional action of the *confirm* `Button`
     public init(error: Error, role: ButtonRole? = nil, action: (() -> Void)? = nil) {
         self.error = error
         self.role = role
         self.action = action
     }
-    public let error: Error
-    public let role: ButtonRole?
-    public let action: (() -> Void)?
+    let error: Error
+    let role: ButtonRole?
+    let action: (() -> Void)?
 }
 
 extension AlertMessage {
+
     /// Wrap an `Error` into a `LocalizedError`
     ///
     /// This to avoid an error:
@@ -43,16 +51,37 @@ extension AlertMessage {
     }
 }
 
-extension View {
-    func errorAlert(error: Binding<AlertMessage?>) -> some View {
-        let localizedAlertError = AlertMessage.LocalizedAlertError(error: error.wrappedValue?.error)
+extension AlertMessage {
+    
+    /// SwiftUI `View` with the confirmation button
+    struct ConfirmButton: View {
+        /// The ``AlertMessage``
+        @Binding var message: AlertMessage?
+        /// The `LocalizedError`
+        var localizedAlertError: LocalizedError?
+        var body: some View {
+            Button(localizedAlertError?.helpAnchor ?? "OK") {
+                if let action = message?.action {
+                    action()
+                }
+                message = nil
+            }
+        }
+    }
+}
+
+public extension View {
+
+    /// Show an `Error Alert`
+    /// - Parameter message: The ``AlertMessage``
+    /// - Returns: A SwiftUI alert with the error message
+    func errorAlert(message: Binding<AlertMessage?>) -> some View {
+        let localizedAlertError = AlertMessage.LocalizedAlertError(error: message.wrappedValue?.error)
         return alert(
             isPresented: .constant(localizedAlertError != nil),
             error: localizedAlertError,
             actions: { _ in
-                Button(localizedAlertError?.helpAnchor ?? "OK") {
-                    error.wrappedValue = nil
-                }
+                AlertMessage.ConfirmButton(message: message, localizedAlertError: localizedAlertError)
             },
             message: { error in
                 Text(error.recoverySuggestion ?? "")
@@ -61,22 +90,21 @@ extension View {
     }
 }
 
-extension View {
-    func confirmationAlert(confirm: Binding<AlertMessage?>) -> some View {
-        let localizedAlertError = AlertMessage.LocalizedAlertError(error: confirm.wrappedValue?.error)
+public extension View {
+
+    /// Show a `Confirmation Dialog`
+    /// - Parameter message: The ``AlertMessage``
+    /// - Returns: A SwiftUI confirmationDialog
+    func confirmationDialog(message: Binding<AlertMessage?>) -> some View {
+        let localizedAlertError = AlertMessage.LocalizedAlertError(error: message.wrappedValue?.error)
         return confirmationDialog(
             localizedAlertError?.errorDescription ?? "Confirm",
             isPresented: .constant(localizedAlertError != nil),
             actions: {
-                Button(localizedAlertError?.helpAnchor ?? "OK", role: confirm.wrappedValue?.role) {
-                    if let action = confirm.wrappedValue?.action {
-                        action()
-                    }
-                    confirm.wrappedValue = nil
+                AlertMessage.ConfirmButton(message: message, localizedAlertError: localizedAlertError)
+                Button("Cancel", role: .cancel) {
+                    message.wrappedValue = nil
                 }
-                Button("Cancel", role: .cancel, action: {
-                    confirm.wrappedValue = nil
-                })
             },
             message: {
                 Text(localizedAlertError?.recoverySuggestion ?? "")
@@ -85,8 +113,13 @@ extension View {
     }
 }
 
-extension Error {
-
+public extension Error {
+    
+    /// Create a ``AlertMessage`` from an Error
+    /// - Parameters:
+    ///   - role: The optional role of the *confirm* `Button`
+    ///   - action: The optional action of the *confirm* `Button`
+    /// - Returns: A formatted ``AlertMessage``
     func alert(role: ButtonRole? = nil, action: (() -> Void)? = nil) -> AlertMessage {
         AlertMessage(error: self, role: role, action: action)
     }
