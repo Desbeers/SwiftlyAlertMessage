@@ -22,7 +22,6 @@
 		D78C0B6E2AA8767600493550 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D78C0B702AA8767600493550 /* AlertMessages.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlertMessages.entitlements; sourceTree = "<group>"; };
 		D78C0B722AA8767600493550 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		D78C0B7C2AA876BA00493550 /* SwiftlyAlertMessage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftlyAlertMessage; path = ..; sourceTree = "<group>"; };
 		D78C0B7D2AA8775F00493550 /* AppErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppErrors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -41,7 +40,6 @@
 		D78C0B5E2AA8767500493550 = {
 			isa = PBXGroup;
 			children = (
-				D78C0B7C2AA876BA00493550 /* SwiftlyAlertMessage */,
 				D78C0B692AA8767500493550 /* AlertMessages */,
 				D78C0B682AA8767500493550 /* Products */,
 			);

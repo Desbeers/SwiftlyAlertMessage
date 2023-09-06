@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "swiftlyalertmessage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Desbeers/SwiftlyAlertMessage",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7439b940b83ce6206b2f45f70f7a808d2870c66a"
+      }
+    }
+  ],
+  "version" : 2
+}
