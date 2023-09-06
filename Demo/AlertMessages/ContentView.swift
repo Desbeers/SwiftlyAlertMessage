@@ -20,8 +20,10 @@ struct ContentView: View {
     /// The body of the `View`
     var body: some View {
         VStack {
+#if !os(tvOS)
             Text("Alerts and Confirmation Dialogs")
                 .font(.largeTitle)
+#endif
             LabeledContent("Error Alerts") {
                 Text("Errors defined in this application")
                     .foregroundStyle(.secondary)
@@ -62,10 +64,13 @@ struct ContentView: View {
             }
             LabeledContent("Confirmation Dialogs") {
                 Button("Confirm overwrite file") {
-                    confirm = AppError.overwriteFile.alert {
+                    confirm = AppError.overwriteFile.alert(role: .destructive) {
                         response = "The file is overwritten"
                     }
                 }
+                Text("The button has a 'destructive' role")
+                    .foregroundStyle(.tertiary)
+                    .padding(.bottom)
                 Text("A form with a value")
                     .foregroundStyle(.secondary)
                 TextField("Text", text: $text, prompt: Text("Default text"))

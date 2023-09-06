@@ -93,7 +93,7 @@ extension AlertMessage {
         /// The `LocalizedError`
         var localizedAlertError: LocalizedError?
         var body: some View {
-            Button(localizedAlertError?.helpAnchor ?? "OK") {
+            Button(localizedAlertError?.helpAnchor ?? "OK", role: message?.role) {
                 if let action = message?.action {
                     action()
                 }
