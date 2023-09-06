@@ -39,15 +39,48 @@ extension AlertMessage {
         var recoverySuggestion: String? {
             underlyingError.recoverySuggestion
         }
-
+        var failureReason: String? {
+            underlyingError.failureReason
+        }
         var helpAnchor: String? {
             underlyingError.helpAnchor
         }
 
         init?(error: Error?) {
-            guard let localizedError = error as? LocalizedError else { return nil }
-            underlyingError = localizedError
+
+            if let localizedError = error as? LocalizedError {
+                underlyingError = localizedError
+            } else if let bridge = error as? NSError{
+                underlyingError = LocalizedAlertCustomError(
+                     errorDescription: bridge.localizedDescription,
+                     recoverySuggestion: bridge.localizedRecoverySuggestion,
+                     failureReason: bridge.localizedFailureReason
+                     )
+            } else {
+                return nil
+            }
         }
+    }
+    
+    /// Create a custom `LocalizedError`
+    /// - Note: This is to wrap a `NSError` into the modern world
+    struct LocalizedAlertCustomError: LocalizedError {
+        init(
+            errorDescription: String? = nil,
+            recoverySuggestion: String? = nil,
+            failureReason: String? = nil,
+            helpAnchor: String? = nil
+        ) {
+            self.errorDescription = errorDescription
+            self.recoverySuggestion = recoverySuggestion
+            self.failureReason = failureReason
+            self.helpAnchor = helpAnchor
+        }
+
+        var errorDescription: String?
+        var recoverySuggestion: String?
+        var failureReason: String?
+        var helpAnchor: String?
     }
 }
 
@@ -121,6 +154,6 @@ public extension Error {
     ///   - action: The optional action of the *confirm* `Button`
     /// - Returns: A formatted ``AlertMessage``
     func alert(role: ButtonRole? = nil, action: (() -> Void)? = nil) -> AlertMessage {
-        AlertMessage(error: self, role: role, action: action)
+        return AlertMessage(error: self, role: role, action: action)
     }
 }
