@@ -1,4 +1,5 @@
 {
+  "originHash" : "56cb02a59ca9a69b8e3251a65ba412f3a5fe9750223f23389b3820be48dab804",
   "pins" : [
     {
       "identity" : "swiftlyalertmessage",
@@ -6,9 +7,9 @@
       "location" : "https://github.com/Desbeers/SwiftlyAlertMessage",
       "state" : {
         "branch" : "main",
-        "revision" : "7439b940b83ce6206b2f45f70f7a808d2870c66a"
+        "revision" : "fba5deb1e01dcdcd93e6871245fa0a042486c14f"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
